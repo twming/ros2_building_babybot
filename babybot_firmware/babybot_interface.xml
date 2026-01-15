@@ -1,0 +1,9 @@
+<library path = "babybot_firmware">
+    <class name="babybot_firmware/BabybotInterface" 
+           type="babybot_firmware::BabybotInterface"
+           base_class_type="hardware_interface::SystemInterface">
+        <description>
+            Babybot hardware interface
+        </description>
+    </class>
+</library>
