@@ -1,4 +1,4 @@
-# Setup
+# Rasberry Pi Setup
 
 Install ROS and dependency packages
 ```
@@ -53,6 +53,24 @@ network:
                     password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             dhcp4: true
             optional: true
+```
+
+# YDLidar Setup
+- Install dependency
+```
+sudo apt install cmake pkg-config
+sudo apt-get install python swig
+sudo apt-get install python-pip
+```
+- Install YDLidar
+```
+git clone https://github.com/YDLIDAR/YDLidar-SDK.git
+cd YDLidar-SDK
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
 ```
 
 udev rule setup for Arduino nano and YDLidar
