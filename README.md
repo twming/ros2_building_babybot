@@ -63,7 +63,11 @@ sudo nano /etc/udev/rules.d/90-babybot.rules
 ```
 SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="0843", ATTRS{idProduct}=="5740", MODE="0666", SYMLINK+="arduino"
 KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="ydlidar"
-
+```
+- restart the udev service
+```
+sudo udevadm control --reload-rules
+sudo udevadm trigger
 ```
 
 # ROS2 Building BabyBot
