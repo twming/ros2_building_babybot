@@ -58,7 +58,12 @@ network:
 udev rule setup for Arduino nano and YDLidar
 ```
 sudo nano /etc/udev/rules.d/90-babybot.rules
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", GROUP="plugdev", MODE="0666"
+```
+- Input the lines below
+```
+SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="0843", ATTRS{idProduct}=="5740", MODE="0666", SYMLINK+="arduino"
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="ydlidar"
+
 ```
 
 # ROS2 Building BabyBot
