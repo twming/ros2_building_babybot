@@ -64,6 +64,7 @@ sudo apt-get install python-pip
 ```
 - Install YDLidar
 ```
+cd ~
 git clone https://github.com/YDLIDAR/YDLidar-SDK.git
 cd YDLidar-SDK
 mkdir build
@@ -72,7 +73,13 @@ cmake ..
 make
 sudo make install
 ```
-
+# RPLidar Setup
+- Install RPLidar
+```
+git clone -b ros2 https://github.com/Slamtec/rplidar_ros.git
+colcon build
+```
+# UDEV Setup
 udev rule setup for Arduino nano and YDLidar
 ```
 sudo nano /etc/udev/rules.d/90-babybot.rules
