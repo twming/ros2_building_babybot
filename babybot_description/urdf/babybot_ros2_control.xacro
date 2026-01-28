@@ -3,7 +3,7 @@
 <robot name="babybot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- gazebo ros2 control - simple controller -->
-    <ros2_control name="GazeboSystem" type="system">
+    <ros2_control name="Babybot Control System" type="system">
         <!-- simulated robot -->
         <xacro:if value="$(arg is_sim)">    
             <hardware>
