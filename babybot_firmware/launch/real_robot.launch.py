@@ -36,10 +36,24 @@ def generate_launch_description():
         )
     )
 
+#    rp_laser_driver = Node(
+#        package="rplidar_ros",
+#        executable="rplidar_node",
+#        name="rplidar_node",
+#        parameters=[os.path.join(
+#            get_package_share_directory("babybot_controller"),
+#            "config",
+#            "rplidar_a1.yaml"
+#        )],
+#        output="screen"
+#    )
+
+
 
     return LaunchDescription([
         hardware_interface,
         controller,
         imu_driver_node,
         yd_laser_driver
+        #rp_laser_driver
     ])
