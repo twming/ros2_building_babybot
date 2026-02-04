@@ -37,9 +37,9 @@ def generate_launch_description():
                 "babybot_controllers.yaml"
             )
         ],
-        remappings=[
-            ("~/robot_description", "/robot_description"),
-        ],
+        # remappings=[
+        #     ("~/robot_description", "/robot_description"),
+        # ],
         output="screen"
     )
 

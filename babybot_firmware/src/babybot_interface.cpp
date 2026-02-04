@@ -141,29 +141,44 @@ namespace babybot_firmware
     {
         if(arduino_.IsDataAvailable())
         {
-            auto dt=(rclcpp::Clock().now() - last_run_).seconds();
             std::string message;
             arduino_.ReadLine(message);
+            
+            // 1. Basic length check to avoid substr out-of-bounds
+            if (message.size() < 4) return hardware_interface::return_type::OK;
+
+            auto dt = (rclcpp::Clock().now() - last_run_).seconds();
             std::stringstream ss(message);
             std::string res;
-            int multiplier =1;
+
             while (std::getline(ss, res, ','))
             {
-                multiplier = res.at(1) == 'p' ? 1 : -1;
-                if(res.at(0) == 'r')
-                {
-                    velocity_states_.at(0) = multiplier * std::stod(res.substr(2,res.size()));
-                    position_states_.at(0) += velocity_states_.at(0) * dt;
+                // 2. Ensure the individual segment is long enough (e.g., "rp1.0")
+                if (res.size() < 3) continue;
+
+                try {
+                    int multiplier = (res.at(1) == 'p') ? 1 : -1;
+                    double val = std::stod(res.substr(2)); // substr(2) goes to end of string
+
+                    if(res.at(0) == 'r')
+                    {
+                        velocity_states_.at(0) = multiplier * val;
+                        position_states_.at(0) += velocity_states_.at(0) * dt;
+                    }
+                    else if (res.at(0) == 'l')
+                    {
+                        velocity_states_.at(1) = multiplier * val;
+                        position_states_.at(1) += velocity_states_.at(1) * dt;    
+                    }
                 }
-                else if (res.at(0) == 'l')
-                {
-                    velocity_states_.at(1) = multiplier * std::stod(res.substr(2,res.size()));
-                    position_states_.at(1) += velocity_states_.at(1) * dt;    
+                catch (const std::invalid_argument& e) {
+                    //RCLCPP_WARN(rclcpp::get_logger("BabybotInterface"), "Malformed serial data: %s", res.c_str());
+                    continue; // Skip this segment and don't crash
                 }
             }
             last_run_ = rclcpp::Clock().now();
         }
-        return hardware_interface::return_type::OK;
+        return hardware_interface::return_type::OK; 
     }
 
     /*

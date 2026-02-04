@@ -14,7 +14,7 @@ def generate_launch_description():
     joy_teleop = Node(
         package="joy_teleop",
         executable="joy_teleop",
-        parameters=[os.path.join(get_package_share_directory("babybot_controller"),"config","joy_teleop_diffdrive.yaml")]
+        parameters=[os.path.join(get_package_share_directory("babybot_controller"),"config","joy_teleop_simple.yaml")]
     )
 
     return LaunchDescription([

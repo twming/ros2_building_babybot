@@ -30,14 +30,25 @@ def generate_launch_description():
         ]
     )
 
-    diffdrive_controller = Node(
+    simple_controller = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
-            "diffdrive_controller",
+            "simple_velocity_controller",
             "--controller-manager",
             "/controller_manager"
         ]
+    )
+
+    # speed controller -> convert cmd_vel to PWM
+    # pass in wheel radius and separation
+    simple_speed_controller = Node(
+        package="babybot_controller",
+        executable="simple_controller.py",
+        parameters=[{
+            "wheel_radius":wheel_radius,
+            "wheel_separation":wheel_separation
+            }]
     )
 
 
@@ -45,5 +56,6 @@ def generate_launch_description():
         wheel_radius_arg,
         wheel_separation_arg,
         joint_state_broadcaster_spawner,
-        diffdrive_controller
+        simple_controller,
+        simple_speed_controller
     ])
